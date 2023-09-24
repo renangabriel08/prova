@@ -1,15 +1,16 @@
 # Simulado 06/09
 
-Atualizações na tela de login
+Adicionando funcionalidades na tela de cadastro
 
 ## 🪄Funcionalidades
 
 Foram adicionados as seguintes funcionalidades:
-- Login -> Finalização da requisição com a API
-- Login -> Tratamento de resposta em caso de sucesso e erro
-- Login -> Navigação adicionada em caso de sucesso no login
+- Cadastro -> Cadastro funcional com a requisição da API.
+- Cadastro -> Tratamento de resposta em caso de sucesso e erro.
+- Cadastro -> Navigação adicionada em caso de sucesso no cadastro.
+- Cadastro -> Validadação da entrada de dados conforme o descrito.
+
 
 ## 💻Telas
-Foram criadas as seguintes telas
-- Cadastro(Criação para rota, já dos campos para preenchimento)
-- Home(Criação para configurar rota)
+Foram editadas as seguintes telas
+- Cadastro(Melhoria na estilização)

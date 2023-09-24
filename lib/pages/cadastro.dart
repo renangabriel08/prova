@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/controllers/cadastro_controller.dart';
 import 'package:flutter_application/controllers/login_controller.dart';
 import 'package:flutter_application/widgets/MyToast.dart';
 
@@ -52,7 +53,16 @@ class _CadastroState extends State<Cadastro> {
 
   verificarCadastro() async {
     if (_formKey.currentState!.validate()) {
-      print('Cadastrou');
+      final res = await CadastroController.cadastrar(
+        nome,
+        email,
+        apelido,
+        senha,
+      );
+      if (res == 'Usuário adicionado.') {
+        Navigator.pushNamed(context, '/login');
+      }
+      MyToast.gerarToast(res);
     }
   }
 
@@ -68,12 +78,12 @@ class _CadastroState extends State<Cadastro> {
         height: heightTela,
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: SizedBox(
-                width: widthTela,
-                height: heightTela - 40,
+          child: Form(
+            key: _formKey,
+            child: SizedBox(
+              width: widthTela,
+              height: heightTela,
+              child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -84,6 +94,10 @@ class _CadastroState extends State<Cadastro> {
                     Column(
                       children: [
                         TextFormField(
+                          validator: (value) =>
+                              CadastroController.validarApelidoOuNome(
+                            nome,
+                          ),
                           onChanged: (value) => nome = value,
                           decoration: const InputDecoration(
                             label: Text('Nome'),
@@ -93,6 +107,9 @@ class _CadastroState extends State<Cadastro> {
                         const SizedBox(height: 5),
                         TextFormField(
                           onChanged: (value) => email = value,
+                          validator: (value) => CadastroController.validarEmail(
+                            email,
+                          ),
                           decoration: const InputDecoration(
                             label: Text('Email'),
                             border: OutlineInputBorder(),
@@ -100,6 +117,10 @@ class _CadastroState extends State<Cadastro> {
                         ),
                         const SizedBox(height: 5),
                         TextFormField(
+                          validator: (value) =>
+                              CadastroController.validarApelidoOuNome(
+                            apelido,
+                          ),
                           onChanged: (value) => apelido = value,
                           decoration: const InputDecoration(
                             label: Text('Apelido'),
@@ -110,6 +131,9 @@ class _CadastroState extends State<Cadastro> {
                         TextFormField(
                           obscureText: esconderSenha,
                           onChanged: (value) => senha = value,
+                          validator: (value) => CadastroController.validarSenha(
+                            senha,
+                          ),
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
                               onPressed: () => revelarSenha(),
@@ -123,6 +147,11 @@ class _CadastroState extends State<Cadastro> {
                         TextFormField(
                           obscureText: esconderConfirmarSenha,
                           onChanged: (value) => confirmarSenha = value,
+                          validator: (value) =>
+                              CadastroController.validarConfirmarSenha(
+                            senha,
+                            confirmarSenha,
+                          ),
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
                               onPressed: () => revelarConfirmarSenha(),
@@ -138,7 +167,7 @@ class _CadastroState extends State<Cadastro> {
                     Column(
                       children: [
                         ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () {
                             verificarCadastro();
                           },
                           style: ElevatedButton.styleFrom(
