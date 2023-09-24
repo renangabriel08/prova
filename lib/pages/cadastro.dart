@@ -73,7 +73,7 @@ class _CadastroState extends State<Cadastro> {
     double heightTela = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: widthTela,
         height: heightTela,
         child: Padding(
@@ -83,13 +83,14 @@ class _CadastroState extends State<Cadastro> {
             child: SizedBox(
               width: widthTela,
               height: heightTela,
-              child: SingleChildScrollView(
+              child: Center(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       'assets/logo.png',
-                      height: 300,
+                      height: heightTela * .5,
                     ),
                     Column(
                       children: [

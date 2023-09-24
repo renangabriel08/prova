@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
         senha,
       );
       if (res['logou']) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/inicio');
       }
       MyToast.gerarToast(res['msg']);
     }
@@ -52,23 +52,23 @@ class _LoginState extends State<Login> {
     double heightTela = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: widthTela,
         height: heightTela,
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: SizedBox(
-                width: widthTela,
-                height: heightTela - 40,
+          child: Form(
+            key: _formKey,
+            child: SizedBox(
+              width: widthTela,
+              height: heightTela - 40,
+              child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       'assets/logo.png',
-                      height: 300,
+                      height: heightTela * .5,
                     ),
                     Column(
                       children: [
