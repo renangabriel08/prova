@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/controllers/login_controller.dart';
+import 'package:flutter_application/widgets/MyToast.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -9,32 +10,46 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+
+  //Formulário
+  String email = '';
+  String senha = '';
+
+  bool esconder = true;
+  IconData icone = Icons.visibility;
+
+  //funcões
+  void revelarSenha() {
+    setState(() {
+      if (esconder) {
+        esconder = false;
+        icone = Icons.visibility_off;
+      } else {
+        esconder = true;
+        icone = Icons.visibility;
+      }
+    });
+  }
+
+  verificarLogin() async {
+    if (_formKey.currentState!.validate()) {
+      var res = await LoginController.logar(
+        email,
+        senha,
+      );
+      if (res['logou']) {
+        Navigator.pushNamed(context, '/home');
+      }
+      MyToast.gerarToast(res['msg']);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //Tela
     double widthTela = MediaQuery.of(context).size.width;
     double heightTela = MediaQuery.of(context).size.height;
-
-    //Formulário
-    final _formKey = GlobalKey<FormState>();
-    String email = '';
-    String senha = '';
-
-    bool esconder = true;
-    IconData icone = Icons.visibility;
-
-    //funcões
-    void revelarSenha() {
-      setState(() {
-        if (esconder) {
-          esconder = false;
-          icone = Icons.visibility_off;
-        } else {
-          esconder = true;
-          icone = Icons.visibility;
-        }
-      });
-    }
 
     return Scaffold(
       body: Container(
@@ -89,10 +104,8 @@ class _LoginState extends State<Login> {
                     Column(
                       children: [
                         ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              LoginController.logar(email, senha);
-                            }
+                          onPressed: () async {
+                            verificarLogin();
                           },
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size(widthTela, 50),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/cadastro.dart';
+import 'package:flutter_application/pages/home.dart';
 import 'package:flutter_application/pages/login.dart';
 import 'package:flutter_application/pages/splash.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const Splash(),
         '/login': (context) => const Login(),
         '/cadastro': (context) => const Cadastro(),
+        '/home': (context) => const Home(),
       },
     );
   }
